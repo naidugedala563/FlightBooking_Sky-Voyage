@@ -1,0 +1,20 @@
+.header-container{
+    height: 10vh;
+    border-bottom: 1px solid rgb(201, 201, 201);
+}
+@media screen and (max-width:768px) {
+    .header-container{
+        border: 0;
+    }
+}
+.navbar{
+    min-height: 10vh;
+    background-color: transparent;
+    border-bottom: 1px solid rgb(201, 201, 201);
+    /* background-color: white; */
+}
+@media screen and (max-width:768px) {
+    .navbar{
+        background-color: white;
+    }
+}
