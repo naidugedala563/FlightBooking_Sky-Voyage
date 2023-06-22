@@ -23,7 +23,6 @@ app.post('/register', async (req, res) => {
         if (user) {
             return res.status(400).json({ message: 'User already exists' });
         }
-
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -59,9 +58,8 @@ app.post('/login', async (req, res) => {
     }
 
     // Generate a JWT token
-    console.log(user.type)
     if (user.type === 'owner') {
-        const agentToken = jwt.sign({ userId: user._id }, 'agenttoken');
+        const ownerToken = jwt.sign({ userId: user._id }, 'agenttoken');
         res.json({ user, ownerToken });
     } else if (user.type === 'passenger') {
         const token = jwt.sign({ userId: user._id }, 'mysecretkey1');
@@ -130,7 +128,6 @@ app.post('/bookings', async (req, res) => {
       const id = req.body.flight;
       const flight = await models.Flight.findById(id);
       flight.reservedSeats.push(...newBooking.seatNumbers);
-    //   console.log(flight)
       const savedFlight = await flight.save();
       newBooking.flight = savedFlight._id;
   
