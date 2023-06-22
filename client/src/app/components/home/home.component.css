@@ -6,10 +6,18 @@
     overflow: auto;
 }
 
+#banner{
+  margin-top: 200px; 
+}
+@media screen and (max-width:768px) {
+  #banner{
+    margin-top: 60px;
+  }
+}
+
 .body-container {
     height: 90vh;
     display: flex;
-    /* align-items: center; */
     justify-content: center;
     width: 100%;
     overflow: auto;

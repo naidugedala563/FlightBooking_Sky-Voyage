@@ -17,26 +17,36 @@ export class LoginComponent {
       password: new FormControl(null, Validators.required),
     })
     const jwtToken = localStorage.getItem('adminJwtToken')
-    // if (jwtToken){
-    //   this.route.navigate(['/admin/home'])
-    // }
+    if (jwtToken) {
+      this.route.navigate(['/admin/dashboard'])
+    }
     const token = localStorage.getItem("jwtToken")
     if (token) {
+      
       this.route.navigate(['/'])
+    }
+    const agentToken = localStorage.getItem("ownerToken")
+    if (agentToken) {
+      this.route.navigate(['/owner/dashboard'])
     }
   }
 
   onSubmit(details = { email: String, password: String }): void {
+    console.log(details)
     this.http.post('http://localhost:5100/login', details).subscribe(
       (response: any) => {
         console.log(response)
-        if(response && response.user._id){
-          localStorage.setItem('userId',response.user._id)
+        if (response && response.user._id) {
+          localStorage.setItem('userId', response.user._id)
         }
         if (response && response.token) {
           window.alert('User Login Successfully!');
           this.route.navigate(['/']);
           localStorage.setItem('jwtToken', response.token);
+        } else if (response && response.agentToken) {
+          window.alert('Agent Login Successfully!');
+          this.route.navigate(['/owner/dashboard']);
+          localStorage.setItem('ownerToken', response.agentToken);
         } else {
           this.route.navigate(['/admin/dashboard']);
           localStorage.setItem('adminJwtToken', response.jwtTtoken);

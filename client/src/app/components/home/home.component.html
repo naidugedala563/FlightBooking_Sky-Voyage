@@ -1,7 +1,7 @@
 <div class="main-container">
     <div class="home-container" id="home">
         <div class="body-container">
-            <div class="container text-light" style="margin-top: 200px;">
+            <div class="container text-light" id="banner">
                 <h1>Your dream holiday's starts here!</h1>
                 <p>Select you'r destination where you want to go.</p>
                 <div class="input-container">
@@ -26,16 +26,16 @@
                         <!-- Add more options as needed -->
                     </select>
                     <input type="date" class="input-field" [(ngModel)]="selectedDate">
-                    <!-- <select name="flight" id="flight" class="input-field" [(ngModel)]="selectedFlight">
-                        <option value="" selected disabled>Flight</option>
-                        <option value="option1">Option 1</option>
-                        <option value="option2">Option 2</option>
-                        <option value="option3">Option 3</option>
-                    </select> -->
-                    <button class="button" (click)="search()">Search</button>
+                    <button class="button" (click)="search()" [disabled]="!isDestinationFormValid()">Search</button>
                 </div>
-                <p *ngIf="isSame" class="text-danger">Departure and destination shouldn't be same</p>
-                <div class="row mt-4" *ngIf="flights.length !== 0">
+                <p *ngIf="isSame" class="text-danger" style="font-weight: bold; font-size: 28px;">Departure and
+                    destination shouldn't be same</p>
+                <div class="text-center" *ngIf="isLoading" style="margin-top: 150px;">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <div class="row mt-4" *ngIf="flights.length !== 0 && !isLoading">
                     <h1>Available Flights</h1>
                     <div class="col-md-12" *ngFor="let flight of flights">
                         <div class="card mb-4 shadow">
@@ -58,7 +58,7 @@
                                 <div>
                                     <p class="card-text">Price: {{ flight.price }}</p>
                                     <p class="card-text" style="color: #9c9c9c;">Seats Available: {{
-                                        flight.seatsAvailable }}</p>
+                                        flight.seatsAvailable - flight.reservedSeats.length }}</p>
                                 </div>
                                 <button class="button" (click)="openModal(flight,flight._id)">BOOK</button>
                                 <ng-template #content let-modal>
@@ -86,31 +86,90 @@
                                                 </button>
                                             </div>
                                         </div>
-
-
-
                                         <!-- Selected seats display -->
                                         <div class="selected-seats">
                                             <p>Selected Seats: {{ selectedSeats.join(', ') }}</p>
                                             <p>Total Price: {{totalPrice}} RS</p>
                                         </div>
                                         <div class="form-container">
-                                            <div *ngFor="let seat of selectedSeats">
-                                              <div class="card p-2">
-                                                <h4>{{ seat }}</h4>
-                                                <input type="text" placeholder="Enter Passenger name" class="p-2" (input)="updatePassengerName(seat, $event)">
-                                              </div>
+                                            <div *ngFor="let seat of selectedSeats; let i = index">
+                                                <div class="card p-2">
+                                                    <h4>{{ seat }}</h4>
+                                                    <input type="text" placeholder="Enter Passenger name" class="p-2"
+                                                        (input)="updatePassengerName(i, $event)">
+                                                </div>
                                             </div>
-                                          </div>
-                                          
+                                        </div>
+                                        <label for="payment" class="mt-2 mb-2">Payment Method</label>
+                                        <select name="method" id="payment" class="input-field" [(ngModel)]="selectedMethod">
+                                            <option value="" selected disabled>Select Payment Method</option>
+                                            <option value="creditCard">Credit Cart</option>
+                                            <option value="debitCard">Debit Card</option>
+                                            <!-- Add more options as needed -->
+                                        </select>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             (click)="modal.dismiss()">Close</button>
-                                        <button type="button" class="btn btn-primary"
-                                            (click)="confirmBooking(flight._id)">Confirm Booking</button>
+                                        <button type="button" class="btn btn-primary" (click)="confirmBooking()"
+                                            [disabled]="selectedSeats.length === 0 || passengers.length !== selectedSeats.length">Confirm
+                                            Booking</button>
                                     </div>
+
+
                                 </ng-template>
+                                <!-- Payment Modal -->
+                                <ng-template #payment let-modal *ngIf="selectedMethod === 'creditCard'">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title">Payment Details</h5>
+                                          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <!-- Payment content goes here -->
+                                          <p>Please enter your credit card details:</p>
+                                          <!-- Credit card input fields -->
+                                          <input type="text" placeholder="Card Number" [(ngModel)]="cardNumber" class="form-control mb-2">
+                                          <input type="text" placeholder="Expiration Date" [(ngModel)]="expirationDate" class="form-control mb-2">
+                                          <input type="text" placeholder="CVV" [(ngModel)]="cvv" class="form-control mb-2">
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+                                          <button type="button" class="btn btn-primary" (click)="onPayment(totalPrice)" routerLink="/" [disabled]="!isPaymentFormValid()">Pay Now</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </ng-template>
+                                  
+                                  <ng-template #payment let-modal *ngIf="selectedMethod === 'debitCard'">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title">Payment Details</h5>
+                                          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <!-- Payment content goes here -->
+                                          <p>Please enter your debit card details:</p>
+                                          <!-- Debit card input fields -->
+                                          <input type="text" placeholder="Card Number" [(ngModel)]="cardNumber" class="form-control mb-2">
+                                          <input type="text" placeholder="Expiration Date" [(ngModel)]="expirationDate" class="form-control mb-2">
+                                          <input type="text" placeholder="CVV" [(ngModel)]="cvv" class="form-control mb-2">
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+                                          <button type="button" class="btn btn-primary" (click)="onPayment(totalPrice)" routerLink="/" [disabled]="!isPaymentFormValid()">Pay Now</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </ng-template>
+                                  
+                                  
                             </div>
                         </div>
                     </div>

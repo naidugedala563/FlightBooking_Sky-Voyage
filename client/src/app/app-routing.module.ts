@@ -7,10 +7,10 @@ import { RegisterComponent } from './components/register/register.component';
 const routes: Routes = [
   {path:'',component:HomeComponent},
   {path:'login',component:LoginComponent},
-  {path:'register',component:RegisterComponent}
-  // {
-  //   path: 'admin', loadChildren: () => import('./modules/admin/admin.module').then((m) => m.AdminModule)
-  // },
+  {path:'register',component:RegisterComponent},
+  {
+    path: 'admin', loadChildren: () => import('./modules/admin/admin.module').then((m) => m.AdminModule)
+  },
 ];
 
 @NgModule({

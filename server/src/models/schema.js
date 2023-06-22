@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     firstname: { type: String, required: true },
     lastname: { type: String, required: true },
+    type: {type: String, required: true},
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     // bookings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Booking' }]
@@ -26,9 +27,11 @@ const bookingSchema = new mongoose.Schema({
     passengers: [{ type: String, required: true }],
     totalPrice: { type: Number, required: true },
     date: { type: Date, default: Date.now },
+    journeyDate: { type: Date, required: true},
     seatNumbers: [{ type: String, required: true }],
     baggageOptions: { type: String, required: false },
     paymentMethod: { type: String, required: true },
+    paymentstatus: { type: String, default: 'pending'}
 });
 
 const models = {

@@ -17,7 +17,7 @@ app.use(cors());
 // user schema
 app.post('/register', async (req, res) => {
     try {
-        const { firstname, lastname, email, password } = req.body;
+        const { firstname, lastname,type, email, password } = req.body;
         const user = await models.Users.findOne({ email });
 
         if (user) {
@@ -31,6 +31,7 @@ app.post('/register', async (req, res) => {
         const newUser = new models.Users({
             firstname,
             lastname,
+            type,
             email,
             password: hashedPassword
         });
@@ -52,18 +53,21 @@ app.post('/login', async (req, res) => {
     if (!user) {
         return res.status(401).json({ message: 'Invalid email or password' });
     }
-    const isAdmin = email == 'virat@gmail.com' && password == 'virat@1234';
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
         return res.status(401).json({ message: 'Invalid email or password' });
     }
 
     // Generate a JWT token
-    if (!isAdmin) {
-        const token = jwt.sign({ userId: user._id }, 'mysecretkey');
+    console.log(user.type)
+    if (user.type === 'owner') {
+        const agentToken = jwt.sign({ userId: user._id }, 'agenttoken');
+        res.json({ user, ownerToken });
+    } else if (user.type === 'passenger') {
+        const token = jwt.sign({ userId: user._id }, 'mysecretkey1');
         res.json({ user, token });
-    } else {
-        const jwtToken = jwt.sign({ userId: user._id }, 'mysecretkey');
+    } else if (user.type === 'admin') {
+        const jwtToken = jwt.sign({ userId: user._id }, 'mysecretkey2');
         res.json({ user, jwtToken });
     }
 });
@@ -78,7 +82,6 @@ app.get('/users', async (req, res) => {
         console.log(error);
     }
 });
-
 
 // Create a new flight
 app.post('/flights', async (req, res) => {
@@ -123,10 +126,11 @@ app.get('/flights', async (req, res) => {
 app.post('/bookings', async (req, res) => {
     try {
       const newBooking = new models.Booking(req.body);
+      
       const id = req.body.flight;
       const flight = await models.Flight.findById(id);
       flight.reservedSeats.push(...newBooking.seatNumbers);
-      console.log(flight)
+    //   console.log(flight)
       const savedFlight = await flight.save();
       newBooking.flight = savedFlight._id;
   
@@ -137,6 +141,14 @@ app.post('/bookings', async (req, res) => {
     }
   });
   
+  app.get('/bookings', async (req, res) => {
+    try {
+      const bookingDetails = await models.Booking.find();
+      res.status(200).json(bookingDetails);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
   
 
 app.get('/bookings/user/:userId', async (req, res) => {

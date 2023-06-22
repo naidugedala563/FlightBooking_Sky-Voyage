@@ -2,13 +2,26 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
+import { HomeComponent } from './components/home/home.component';
+import { FlightsComponent } from './components/flights/flights.component';
 
 const routes: Routes = [
-  {path:'',component:DashboardComponent,
+  {path:'',component:HomeComponent,
     children: [
+      {
+        path:'dashboard',
+        component:DashboardComponent
+      },
       {
         path:'bookings',
         component:BookingsComponent
+      },
+      {
+        path:'flights',
+        component:FlightsComponent
+      },
+      {
+        path: '', redirectTo: '/admin/dashboard', pathMatch: 'full'
       }
     ]
   }
