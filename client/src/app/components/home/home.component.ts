@@ -37,6 +37,20 @@ export class HomeComponent {
     this.passengers[index] = value;
   }
 
+  error: string = "";
+
+  checkSelectedDate() {
+    const today = new Date();
+    const selected = new Date(this.selectedDate);
+
+    if (selected < today) {
+      this.error = 'Please select a future date.';
+      this.selectedDate = ''; 
+    } else {
+      this.error = "";
+    }
+  }
+
 
   isSame = false;
   totalPrice = 0;

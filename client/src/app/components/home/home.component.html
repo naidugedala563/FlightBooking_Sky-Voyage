@@ -25,9 +25,10 @@
                         <option value="Dehli">Dehli</option>
                         <!-- Add more options as needed -->
                     </select>
-                    <input type="date" class="input-field" [(ngModel)]="selectedDate">
+                    <input type="date" class="input-field" [(ngModel)]="selectedDate" (change)="checkSelectedDate()">
                     <button class="button" (click)="search()" [disabled]="!isDestinationFormValid()">Search</button>
                 </div>
+                <p class="error-message text-danger" style="font-weight: bold; font-size: 28px;" *ngIf="error">{{ error }}</p>
                 <p *ngIf="isSame" class="text-danger" style="font-weight: bold; font-size: 28px;">Departure and
                     destination shouldn't be same</p>
                 <div class="text-center" *ngIf="isLoading" style="margin-top: 150px;">
@@ -101,7 +102,8 @@
                                             </div>
                                         </div>
                                         <label for="payment" class="mt-2 mb-2">Payment Method</label>
-                                        <select name="method" id="payment" class="input-field" [(ngModel)]="selectedMethod">
+                                        <select name="method" id="payment" class="input-field"
+                                            [(ngModel)]="selectedMethod">
                                             <option value="" selected disabled>Select Payment Method</option>
                                             <option value="creditCard">Credit Cart</option>
                                             <option value="debitCard">Debit Card</option>
@@ -121,55 +123,69 @@
                                 <!-- Payment Modal -->
                                 <ng-template #payment let-modal *ngIf="selectedMethod === 'creditCard'">
                                     <div class="modal-dialog">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title">Payment Details</h5>
-                                          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-                                            <span aria-hidden="true">&times;</span>
-                                          </button>
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Payment Details</h5>
+                                                <button type="button" class="close" aria-label="Close"
+                                                    (click)="modal.dismiss()">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Payment content goes here -->
+                                                <p>Please enter your credit card details:</p>
+                                                <!-- Credit card input fields -->
+                                                <input type="text" placeholder="Card Number" [(ngModel)]="cardNumber"
+                                                    class="form-control mb-2">
+                                                <input type="text" placeholder="Expiration Date"
+                                                    [(ngModel)]="expirationDate" class="form-control mb-2">
+                                                <input type="text" placeholder="CVV" [(ngModel)]="cvv"
+                                                    class="form-control mb-2">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    (click)="modal.dismiss()">Close</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    (click)="onPayment(totalPrice)" routerLink="/"
+                                                    [disabled]="!isPaymentFormValid()">Pay Now</button>
+                                            </div>
                                         </div>
-                                        <div class="modal-body">
-                                          <!-- Payment content goes here -->
-                                          <p>Please enter your credit card details:</p>
-                                          <!-- Credit card input fields -->
-                                          <input type="text" placeholder="Card Number" [(ngModel)]="cardNumber" class="form-control mb-2">
-                                          <input type="text" placeholder="Expiration Date" [(ngModel)]="expirationDate" class="form-control mb-2">
-                                          <input type="text" placeholder="CVV" [(ngModel)]="cvv" class="form-control mb-2">
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
-                                          <button type="button" class="btn btn-primary" (click)="onPayment(totalPrice)" routerLink="/" [disabled]="!isPaymentFormValid()">Pay Now</button>
-                                        </div>
-                                      </div>
                                     </div>
-                                  </ng-template>
-                                  
-                                  <ng-template #payment let-modal *ngIf="selectedMethod === 'debitCard'">
+                                </ng-template>
+
+                                <ng-template #payment let-modal *ngIf="selectedMethod === 'debitCard'">
                                     <div class="modal-dialog">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title">Payment Details</h5>
-                                          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-                                            <span aria-hidden="true">&times;</span>
-                                          </button>
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Payment Details</h5>
+                                                <button type="button" class="close" aria-label="Close"
+                                                    (click)="modal.dismiss()">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Payment content goes here -->
+                                                <p>Please enter your debit card details:</p>
+                                                <!-- Debit card input fields -->
+                                                <input type="text" placeholder="Card Number" [(ngModel)]="cardNumber"
+                                                    class="form-control mb-2">
+                                                <input type="text" placeholder="Expiration Date"
+                                                    [(ngModel)]="expirationDate" class="form-control mb-2">
+                                                <input type="text" placeholder="CVV" [(ngModel)]="cvv"
+                                                    class="form-control mb-2">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    (click)="modal.dismiss()">Close</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    (click)="onPayment(totalPrice)" routerLink="/"
+                                                    [disabled]="!isPaymentFormValid()">Pay Now</button>
+                                            </div>
                                         </div>
-                                        <div class="modal-body">
-                                          <!-- Payment content goes here -->
-                                          <p>Please enter your debit card details:</p>
-                                          <!-- Debit card input fields -->
-                                          <input type="text" placeholder="Card Number" [(ngModel)]="cardNumber" class="form-control mb-2">
-                                          <input type="text" placeholder="Expiration Date" [(ngModel)]="expirationDate" class="form-control mb-2">
-                                          <input type="text" placeholder="CVV" [(ngModel)]="cvv" class="form-control mb-2">
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
-                                          <button type="button" class="btn btn-primary" (click)="onPayment(totalPrice)" routerLink="/" [disabled]="!isPaymentFormValid()">Pay Now</button>
-                                        </div>
-                                      </div>
                                     </div>
-                                  </ng-template>
-                                  
-                                  
+                                </ng-template>
+
+
                             </div>
                         </div>
                     </div>

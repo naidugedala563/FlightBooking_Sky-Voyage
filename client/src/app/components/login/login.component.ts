@@ -27,7 +27,7 @@ export class LoginComponent {
     }
     const agentToken = localStorage.getItem("ownerToken")
     if (agentToken) {
-      this.route.navigate(['/owner/dashboard'])
+      this.route.navigate(['/owner/flights'])
     }
   }
 
@@ -43,10 +43,10 @@ export class LoginComponent {
           window.alert('User Login Successfully!');
           this.route.navigate(['/']);
           localStorage.setItem('jwtToken', response.token);
-        } else if (response && response.agentToken) {
+        } else if (response && response.ownerToken) {
           window.alert('Agent Login Successfully!');
-          this.route.navigate(['/owner/dashboard']);
-          localStorage.setItem('ownerToken', response.agentToken);
+          this.route.navigate(['/owner/glights']);
+          localStorage.setItem('ownerToken', response.ownerToken);
         } else {
           this.route.navigate(['/admin/dashboard']);
           localStorage.setItem('adminJwtToken', response.jwtTtoken);

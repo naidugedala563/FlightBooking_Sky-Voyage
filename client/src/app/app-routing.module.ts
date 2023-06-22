@@ -5,11 +5,16 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
-  {path:'',component:HomeComponent},
-  {path:'login',component:LoginComponent},
-  {path:'register',component:RegisterComponent},
+  { path: '', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   {
-    path: 'admin', loadChildren: () => import('./modules/admin/admin.module').then((m) => m.AdminModule)
+    path: 'admin',
+    loadChildren: () => import('./modules/admin/admin.module').then((m) => m.AdminModule)
+  },
+  {
+    path: 'owner',
+    loadChildren: () => import('./ownermodules/owner/owner.module').then((m) => m.OwnerModule)
   },
 ];
 

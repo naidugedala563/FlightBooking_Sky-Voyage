@@ -40,8 +40,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onLogout() {
-    localStorage.removeItem('jwtToken')
-    localStorage.removeItem('adminJwtToken')
+    localStorage.clear()
     window.alert("Logout Successful!")
     this.route.navigate(['/'])
     this.isAdmin = false
