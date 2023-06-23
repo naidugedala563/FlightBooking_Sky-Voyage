@@ -7,6 +7,8 @@ import { BookingsComponent } from './components/bookings/bookings.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HomeComponent } from './components/home/home.component';
 import { FlightsComponent } from './components/flights/flights.component';
+import { AddFlightComponent } from './components/add-flight/add-flight.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,11 +17,13 @@ import { FlightsComponent } from './components/flights/flights.component';
     SidebarComponent,
     BookingsComponent,
     HomeComponent,
-    FlightsComponent
+    FlightsComponent,
+    AddFlightComponent
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    FormsModule
   ]
 })
 export class AdminModule { }

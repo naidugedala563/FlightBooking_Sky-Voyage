@@ -10,10 +10,12 @@ export class BookingsComponent {
   isLoading = false
   bookings: any[] = []
   constructor(private http:HttpClient){
+    const userId = localStorage.getItem('userId')
+    console.log(userId)
     this.isLoading = true
-    const airline = localStorage.getItem('airline')
-    this.http.get<any[]>('http://localhost:5100/bookings').subscribe((res) => {
-      this.bookings = res.filter(booking => booking.flight.airline === airline)
+    this.http.get<any[]>(`http://localhost:5100/bookings/user/${userId}`).subscribe((res) => {
+      this.bookings = res
+      console.log(res)
       this.isLoading = false
     })
   }

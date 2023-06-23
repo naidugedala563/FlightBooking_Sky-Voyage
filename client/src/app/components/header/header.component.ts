@@ -27,22 +27,27 @@ export class HeaderComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    const token = localStorage.getItem('jwtToken')
-    if (token) {
-      this.isAdmin = false
-      localStorage.removeItem('adminJwtToken')
-    }
-    const jwtToken = localStorage.getItem("adminJwtToken")
+    const jwtToken = localStorage.getItem('adminJwtToken')
     if (jwtToken) {
-      localStorage.removeItem('jwtToken')
-      this.isAdmin = true
+      this.adminToken = true
+    }
+    const token = localStorage.getItem("jwtToken")
+    if (token) {
+      this.passengerToken = true
+    }
+    const agentToken = localStorage.getItem("ownerToken")
+    if (agentToken) {
+      this.ownerToken = true
     }
   }
 
   onLogout() {
     localStorage.clear()
     window.alert("Logout Successful!")
+    this.ngOnInit()
     this.route.navigate(['/'])
-    this.isAdmin = false
+    this.adminToken = false
+  this.passengerToken= false
+  this.ownerToken = false
   }
 }

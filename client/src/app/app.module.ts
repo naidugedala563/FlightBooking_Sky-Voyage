@@ -9,12 +9,13 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { BookingComponent } from './components/booking/booking.component';
-import { AllBookingsComponent } from './components/all-bookings/all-bookings.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { BookingsComponent } from './components/bookings/bookings.component';
+import { OwnerRegiterComponent } from './components/owner-regiter/owner-regiter.component';
+import { OwnerLoginComponent } from './components/owner-login/owner-login.component';
 
 @NgModule({
   declarations: [
@@ -22,12 +23,13 @@ import { ContactComponent } from './components/contact/contact.component';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    BookingComponent,
-    AllBookingsComponent,
     HeaderComponent,
     FooterComponent,
     AboutComponent,
-    ContactComponent
+    ContactComponent,
+    BookingsComponent,
+    OwnerRegiterComponent,
+    OwnerLoginComponent
   ],
   imports: [
     BrowserModule,

@@ -39,7 +39,6 @@
                     <select class="form-control" id="type" formControlName="type" required>
                       <option value="" selected disabled>Select Type</option>
                       <option value="passenger">Passenger</option>
-                      <option value="owner">Owner</option>
                       <option value="admin">Admin</option>
                     </select>
                     <div *ngIf="regForm.controls['type'].touched && regForm.controls['type']?.errors">
@@ -60,7 +59,8 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 w-100" [disabled]="regForm.invalid" >Sign Up</button>
-                <div class="mt-2"><a routerLink="/login" class="mt-2">Already have an account? click here</a></div>
+                <div class="mt-2 w-100 justify-content-between" style="gap: 10px;"><a routerLink="/login" class="mt-2">Already have an account? click here</a> </div>
+                <a routerLink="/airline-register" class="mt-2">Flight owner? click here</a>
             </form>
         </div>
     </div>

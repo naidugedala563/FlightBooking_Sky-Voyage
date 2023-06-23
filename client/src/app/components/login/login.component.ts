@@ -29,6 +29,23 @@ export class LoginComponent {
     if (agentToken) {
       this.route.navigate(['/owner/flights'])
     }
+    this.ngOnInit()
+  }
+
+  ngOnInit(): void {
+    const jwtToken = localStorage.getItem('adminJwtToken')
+    if (jwtToken) {
+      this.route.navigate(['/admin/dashboard'])
+    }
+    const token = localStorage.getItem("jwtToken")
+    if (token) {
+      
+      this.route.navigate(['/'])
+    }
+    const agentToken = localStorage.getItem("ownerToken")
+    if (agentToken) {
+      this.route.navigate(['/owner/flights'])
+    }
   }
 
   onSubmit(details = { email: String, password: String }): void {

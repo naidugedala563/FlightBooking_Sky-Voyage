@@ -11,7 +11,8 @@ export class FlightsComponent {
   flights: any[] = []
   constructor(private http:HttpClient){
     this.isLoading = true
-    this.http.get<any[]>('http://localhost:5100/flights').subscribe((res) => {
+    const airline = localStorage.getItem('airline')
+    this.http.get<any[]>(`http://localhost:5100/flights/airline/${airline}`).subscribe((res) => {
       this.flights = res
       this.isLoading = false
     })

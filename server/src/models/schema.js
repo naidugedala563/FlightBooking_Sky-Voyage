@@ -9,6 +9,12 @@ const userSchema = new mongoose.Schema({
     // bookings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Booking' }]
 });
 
+const airlineSchema = new mongoose.Schema({
+    airline: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+});
+
 const flightSchema = new mongoose.Schema({
     airline: { type: String, required: true },
     flightNumber: { type: String, required: true },
@@ -28,6 +34,7 @@ const bookingSchema = new mongoose.Schema({
     totalPrice: { type: Number, required: true },
     date: { type: Date, default: Date.now },
     journeyDate: { type: Date, required: true},
+    returnDate: { type: Date},
     seatNumbers: [{ type: String, required: true }],
     baggageOptions: { type: String, required: false },
     paymentMethod: { type: String, required: true },
@@ -37,7 +44,8 @@ const bookingSchema = new mongoose.Schema({
 const models = {
     Users: mongoose.model('Users', userSchema),
     Flight: mongoose.model('Flight', flightSchema),
-    Booking: mongoose.model('Booking', bookingSchema)
+    Booking: mongoose.model('Booking', bookingSchema),
+    Airline: mongoose.model('Airline', airlineSchema)
 }
 
 module.exports = models;

@@ -28,6 +28,7 @@ export class HomeComponent {
   passengers: string[] = [];
   currentModal: NgbModalRef | null = null;
   selectedMethod: string = ''
+  returnDate : string = ''
 
   isLoading = false
 
@@ -42,10 +43,20 @@ export class HomeComponent {
   checkSelectedDate() {
     const today = new Date();
     const selected = new Date(this.selectedDate);
-
     if (selected < today) {
       this.error = 'Please select a future date.';
       this.selectedDate = ''; 
+    } else {
+      this.error = "";
+    }
+  }
+
+  checkReturnDate() {
+    const today = new Date(this.selectedDate);
+    const selected = new Date(this.returnDate);
+    if (selected <= today) {
+      this.error = 'Please select a future date.';
+      this.returnDate = ''; 
     } else {
       this.error = "";
     }
@@ -65,6 +76,14 @@ export class HomeComponent {
     this.selectedFlight = '';
     this.totalPrice = 0;
     this.generateSeatRows();
+    const token = localStorage.getItem('adminJwtToken')
+    if(token){
+      this.route.navigate(['/admin/dashboard'])
+      const ownerToken = localStorage.getItem('ownerToken')
+    if(ownerToken){
+      this.route.navigate(['/owner/flights'])
+    }
+    }
 
   }
 
@@ -144,15 +163,18 @@ export class HomeComponent {
       passengers: this.passengers,
       totalPrice: this.totalPrice,
       journeyDate: this.selectedDate,
+      returnDate:this.returnDate,
       seatNumbers: this.selectedSeats,
-      paymentMethod: this.selectedMethod
+      paymentMethod: this.selectedMethod,
+      paymentstatus: 'success'
     }
     console.log(this.selectedMethod)
     const response = confirm("Are you sure you want to confirm the booking?")
     if (response) {
-      this.http.post('http://localhost:5100/bookings', bookingDetails).subscribe((res) => {
-        console.log('booked')
+      
+      this.http.post('http://localhost:5100/bookings', bookingDetails).subscribe((res) => { 
         this.currentModal = this.modalService.open(this.paymentModal, { size: 'lg' });
+        console.log(res)       
       })
       if (this.currentModal) {
         this.currentModal.dismiss();

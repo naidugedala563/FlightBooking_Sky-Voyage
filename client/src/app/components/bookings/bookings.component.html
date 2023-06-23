@@ -1,4 +1,4 @@
-<ul class="bookings-container container pt-4">
+<ul class="bookings-container container p-4">
     <h1>Bookings</h1>
     <div class="text-center" *ngIf="isLoading" style="margin-top: 150px;">
         <div class="spinner-border" role="status">
@@ -13,7 +13,7 @@
           <strong>User:</strong> {{ booking.user }}
         </div>
         <div>
-          <strong>Flight Number:</strong> {{ booking.flight.flightNumber }}
+          <strong>Flight:</strong> {{ booking.flight }}
         </div>
         <div>
           <strong>Passengers:</strong>
@@ -25,10 +25,11 @@
           <strong>Total Price:</strong> {{ booking.totalPrice }}
         </div>
         <div>
-          <strong>Date:</strong> {{ booking.date | date }}
+          <strong>Booking Date:</strong> {{ booking.date | date }}
         </div>
         <div>
           <strong>Journey Date:</strong> {{ booking.journeyDate | date }}
+
         </div>
         <div>
           <strong>Seat Numbers:</strong>
@@ -36,12 +37,13 @@
             <li *ngFor="let seat of booking.seatNumbers">{{ seat }}</li>
           </ul>
         </div>
-        <div>
-          <strong>Baggage Options:</strong> {{ booking.baggageOptions }}
-        </div>
-        <div>
+        <div *ngIf="booking.paymentMethod !== ''">
           <strong>Payment Method:</strong> {{ booking.paymentMethod }}
         </div>
+        <div *ngIf="booking.paymentMethod !== ''">
+          <strong>Payment Status:</strong> {{ booking.paymentstatus }}
+        </div>
+                
       </li>
   </ul>
   

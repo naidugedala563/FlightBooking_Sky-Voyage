@@ -4,6 +4,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { HomeComponent } from './components/home/home.component';
 import { FlightsComponent } from './components/flights/flights.component';
+import { AddFlightComponent } from './components/add-flight/add-flight.component';
 
 const routes: Routes = [
   {path:'',component:HomeComponent,
@@ -19,6 +20,10 @@ const routes: Routes = [
       {
         path:'flights',
         component:FlightsComponent
+      },
+      {
+        path:'add-flight',
+        component:AddFlightComponent
       },
       {
         path: '', redirectTo: '/admin/dashboard', pathMatch: 'full'

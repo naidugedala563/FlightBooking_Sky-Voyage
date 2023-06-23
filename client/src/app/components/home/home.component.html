@@ -4,30 +4,47 @@
             <div class="container text-light" id="banner">
                 <h1>Your dream holiday's starts here!</h1>
                 <p>Select you'r destination where you want to go.</p>
-                <div class="input-container">
-                    <select name="from" id="from" class="input-field" [(ngModel)]="selectedFrom">
+                <div class="input-container mb-4">
+                    <div class="input-field-container">
+                      <label for="departure">Departure</label>
+                      <select name="from" id="from" class="input-field" [(ngModel)]="selectedFrom">
                         <option value="" selected disabled>Departure City</option>
                         <option value="Chennai">Chennai</option>
-                        <option value="Bengalore">Bengalore</option>
+                        <option value="Bangalore">Bangalore</option>
                         <option value="Hyderabad">Hyderabad</option>
                         <option value="Mumbai">Mumbai</option>
-                        <option value="Madhyapradesh">Madhyapradesh</option>
-                        <option value="Dehli">Dehli</option>
+                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                        <option value="Delhi">Delhi</option>
                         <!-- Add more options as needed -->
-                    </select>
-                    <select name="to" id="to" class="input-field" [(ngModel)]="selectedTo">
+                      </select>
+                    </div>
+                    <div class="input-field-container">
+                      <label for="destination">Destination</label>
+                      <select name="to" id="to" class="input-field" [(ngModel)]="selectedTo">
                         <option value="" selected disabled>Destination City</option>
                         <option value="Chennai">Chennai</option>
-                        <option value="Bengalore">Bengalore</option>
+                        <option value="Bangalore">Bangalore</option>
                         <option value="Hyderabad">Hyderabad</option>
                         <option value="Mumbai">Mumbai</option>
-                        <option value="Madhyapradesh">Madhyapradesh</option>
-                        <option value="Dehli">Dehli</option>
+                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                        <option value="Delhi">Delhi</option>
                         <!-- Add more options as needed -->
-                    </select>
-                    <input type="date" class="input-field" [(ngModel)]="selectedDate" (change)="checkSelectedDate()">
-                    <button class="button" (click)="search()" [disabled]="!isDestinationFormValid()">Search</button>
-                </div>
+                      </select>
+                    </div>
+                    <div class="input-field-container">
+                      <label for="journey">Journey Date</label>
+                      <input type="date" class="input-field" [(ngModel)]="selectedDate" (change)="checkSelectedDate()">
+                    </div>
+                    <div class="input-field-container">
+                      <label for="return">Return Date</label>
+                      <input type="date" class="input-field" [(ngModel)]="returnDate" (change)="checkReturnDate()">
+                    </div>
+                    <div class="button-container">
+                        <label for=""></label>
+                        <button class="button" (click)="search()" [disabled]="!isDestinationFormValid()">Search</button>
+                    </div>
+                  </div>
+                  
                 <p class="error-message text-danger" style="font-weight: bold; font-size: 28px;" *ngIf="error">{{ error }}</p>
                 <p *ngIf="isSame" class="text-danger" style="font-weight: bold; font-size: 28px;">Departure and
                     destination shouldn't be same</p>
