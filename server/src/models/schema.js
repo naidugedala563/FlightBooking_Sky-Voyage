@@ -5,8 +5,7 @@ const userSchema = new mongoose.Schema({
     lastname: { type: String, required: true },
     type: {type: String, required: true},
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    // bookings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Booking' }]
+    password: { type: String, required: true }
 });
 
 const airlineSchema = new mongoose.Schema({

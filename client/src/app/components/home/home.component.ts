@@ -183,7 +183,11 @@ export class HomeComponent {
   }
 
   onPayment(totalPrice: number) {
-    alert(`Payment Successful of ${totalPrice}`)
+    let price = 0
+    if(this.returnDate !== ''){
+      price = totalPrice * 2
+    }
+    alert(`Payment Successful of ${price}`)
   }
 
   isFormValid(): boolean {
