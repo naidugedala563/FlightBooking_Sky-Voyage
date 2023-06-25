@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, ViewChild, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -28,7 +28,7 @@ export class HomeComponent {
   passengers: string[] = [];
   currentModal: NgbModalRef | null = null;
   selectedMethod: string = ''
-  returnDate : string = ''
+  returnDate: string = ''
 
   isLoading = false
 
@@ -45,7 +45,7 @@ export class HomeComponent {
     const selected = new Date(this.selectedDate);
     if (selected < today) {
       this.error = 'Please select a future date.';
-      this.selectedDate = ''; 
+      this.selectedDate = '';
     } else {
       this.error = "";
     }
@@ -56,7 +56,7 @@ export class HomeComponent {
     const selected = new Date(this.returnDate);
     if (selected <= today) {
       this.error = 'Please select a future date.';
-      this.returnDate = ''; 
+      this.returnDate = '';
     } else {
       this.error = "";
     }
@@ -77,12 +77,12 @@ export class HomeComponent {
     this.totalPrice = 0;
     this.generateSeatRows();
     const token = localStorage.getItem('adminJwtToken')
-    if(token){
+    if (token) {
       this.route.navigate(['/admin/dashboard'])
       const ownerToken = localStorage.getItem('ownerToken')
-    if(ownerToken){
-      this.route.navigate(['/owner/flights'])
-    }
+      if (ownerToken) {
+        this.route.navigate(['/owner/flights'])
+      }
     }
 
   }
@@ -120,9 +120,32 @@ export class HomeComponent {
       this.isSame = false
     }
     this.http.get<any[]>('http://localhost:5100/flights').subscribe((res) => {
-      this.flights = res.filter(flight => flight.origin === this.selectedFrom && flight.destination === this.selectedTo)
+      this.flights = res.filter(flight =>   flight.origin === this.selectedFrom && flight.destination === this.selectedTo)
       this.isLoading = false
     })
+
+    // const url = 'https://flight-fare-search.p.rapidapi.com/v2/flight/?from=LHR&to=DXB&date=2023-06-30&adult=1&type=economy&currency=USD';
+    // const options = {
+    //   headers: new HttpHeaders({
+    //     'X-RapidAPI-Key': 'eb3a5ec33dmsh017c3ab44968551p11590fjsn7a4a64b70a45',
+    //     'X-RapidAPI-Host': 'flight-fare-search.p.rapidapi.com'
+    //   })
+    // };
+
+    // const getData = () => {
+    //   this.http.get(url, options).subscribe(
+    //     (result) => {
+    //       console.log(result);
+    //     },
+    //     (error) => {
+    //       console.error(error);
+    //     }
+    //   );
+    // };
+
+    // getData();
+
+
   }
 
   selectedSeats: string[] = [];
@@ -163,7 +186,7 @@ export class HomeComponent {
       passengers: this.passengers,
       totalPrice: this.totalPrice,
       journeyDate: this.selectedDate,
-      returnDate:this.returnDate,
+      returnDate: this.returnDate,
       seatNumbers: this.selectedSeats,
       paymentMethod: this.selectedMethod,
       paymentstatus: 'success'
@@ -171,10 +194,10 @@ export class HomeComponent {
     console.log(this.selectedMethod)
     const response = confirm("Are you sure you want to confirm the booking?")
     if (response) {
-      
-      this.http.post('http://localhost:5100/bookings', bookingDetails).subscribe((res) => { 
+
+      this.http.post('http://localhost:5100/bookings', bookingDetails).subscribe((res) => {
         this.currentModal = this.modalService.open(this.paymentModal, { size: 'lg' });
-        console.log(res)       
+        console.log(res)
       })
       if (this.currentModal) {
         this.currentModal.dismiss();
@@ -183,9 +206,10 @@ export class HomeComponent {
   }
 
   onPayment(totalPrice: number) {
-    let price = 0
-    if(this.returnDate !== ''){
+    let price = totalPrice * this.selectedSeats.length
+    if (this.returnDate !== '') {
       price = totalPrice * 2
+
     }
     alert(`Payment Successful of ${price}`)
   }

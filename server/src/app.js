@@ -109,9 +109,9 @@ app.post('/airline-login', async (req, res) => {
         return res.status(401).json({ message: 'Invalid email or password' });
     }
     // Generate a JWT token
-    
-        const ownerToken = jwt.sign({ airlineOwnerId: airlineOwner._id }, 'agenttoken');
-        res.json({ airlineOwner, ownerToken });
+
+    const ownerToken = jwt.sign({ airlineOwnerId: airlineOwner._id }, 'agenttoken');
+    res.json({ airlineOwner, ownerToken });
 
 });
 
@@ -154,6 +154,39 @@ app.get('/flights/:id', async (req, res) => {
     }
 });
 
+app.delete('/bookings/:id', async (req, res) => {
+    try {
+      const booking = await models.Booking.findById(req.params.id);
+      if (!booking) {
+        return res.status(404).json({ message: 'Booking not found' });
+      }
+  
+      const flight = await models.Flight.findById(booking.flight);
+      if (!flight) {
+        return res.status(404).json({ message: 'Flight not found' });
+      }
+  
+      // Remove seats from flight
+      flight.reservedSeats = flight.reservedSeats.filter(seat => !booking.seatNumbers.includes(seat));
+  
+      // Save the updated flight
+      await flight.save();
+  
+      // Delete the booking
+      await models.Booking.deleteOne({ _id: req.params.id });
+  
+      res.json({ message: 'Booking deleted successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server Error' });
+    }
+  });
+  
+  
+
+
+
+
 
 // Get all flights
 app.get('/flights', async (req, res) => {
@@ -168,7 +201,7 @@ app.get('/flights', async (req, res) => {
 
 app.get('/flights/airline/:airline', async (req, res) => {
     try {
-        const flights = await models.Flight.find({airline:req.params.airline});
+        const flights = await models.Flight.find({ airline: req.params.airline });
         res.json(flights);
         console.log(flights)
     } catch (error) {
@@ -182,7 +215,7 @@ app.post('/bookings', async (req, res) => {
     try {
         const newBooking = new models.Booking(req.body);
         const id = req.body.flight;
-        
+
         const flight = await models.Flight.findById(id);
         flight.reservedSeats.push(...newBooking.seatNumbers);
         const savedFlight = await flight.save();
@@ -196,13 +229,13 @@ app.post('/bookings', async (req, res) => {
 
 app.get('/bookings', async (req, res) => {
     try {
-      const bookingDetails = await models.Booking.find().populate('flight');
-      res.status(200).json(bookingDetails);
+        const bookingDetails = await models.Booking.find().populate('flight');
+        res.status(200).json(bookingDetails);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message });
     }
-  });
-  
+});
+
 
 
 app.get('/bookings/user/:userId', async (req, res) => {
@@ -223,14 +256,14 @@ app.get('/bookings/flight/:flightId', async (req, res) => {
     }
 });
 
-app.post('/bookings/:id/payments', async (req,res)=>{
-    try{
+app.post('/bookings/:id/payments', async (req, res) => {
+    try {
         const bookingDetails = await models.Booking.findById(id);
         bookingDetails.paymentstatus = 'success'
         const savedBooking = bookingDetails.save()
         res.status(200).json(savedBooking);
     } catch (error) {
-        res.status(500).json({ error: error.message});
+        res.status(500).json({ error: error.message });
     }
 })
 
