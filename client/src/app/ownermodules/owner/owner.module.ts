@@ -6,6 +6,7 @@ import { ComponentsComponent } from './components/components.component';
 import { HomeComponent } from './components/home/home.component';
 import { FlightsComponent } from './components/flights/flights.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { BookingsComponent } from './components/bookings/bookings.component';
   ],
   imports: [
     CommonModule,
-    OwnerRoutingModule
+    OwnerRoutingModule,
+    FormsModule
   ]
 })
 export class OwnerModule { }

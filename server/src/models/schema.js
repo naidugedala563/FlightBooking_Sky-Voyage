@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     firstname: { type: String, required: true },
     lastname: { type: String, required: true },
-    type: {type: String, required: true},
+    type: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true }
 });
@@ -19,9 +19,12 @@ const flightSchema = new mongoose.Schema({
     flightNumber: { type: String, required: true },
     origin: { type: String, required: true },
     destination: { type: String, required: true },
-    departureTime: { type: Date, required: true },
-    reservedSeats: [{type: String, default:0}],
-    arrivalTime: { type: Date, required: true },
+    departureTime: { type: String, required: true },
+    reservedSeats: [{
+        seat: { type: String, required: true },
+        date: { type: Date, required: true }
+      }],
+    arrivalTime: { type: String, required: true },
     price: { type: Number, required: true },
     seatsAvailable: { type: Number, required: true }
 });
@@ -32,13 +35,16 @@ const bookingSchema = new mongoose.Schema({
     passengers: [{ type: String, required: true }],
     totalPrice: { type: Number, required: true },
     date: { type: Date, default: Date.now },
-    journeyDate: { type: Date, required: true},
-    returnDate: { type: Date},
-    seatNumbers: [{ type: String, required: true }],
+    journeyDate: { type: Date, required: true },
+    returnDate: { type: Date },
+    seatNumbers: [{
+      seat: { type: String, required: true },
+      date: { type: Date, required: true }
+    }],
     baggageOptions: { type: String, required: false },
     paymentMethod: { type: String, required: true },
-    paymentstatus: { type: String, default: 'pending'}
-});
+    paymentStatus: { type: String, default: 'pending' }
+  });
 
 const models = {
     Users: mongoose.model('Users', userSchema),

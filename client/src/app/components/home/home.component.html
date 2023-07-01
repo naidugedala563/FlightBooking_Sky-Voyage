@@ -4,6 +4,10 @@
             <div class="container text-light" id="banner">
                 <h1>Your dream holiday's starts here!</h1>
                 <p>Select you'r destination where you want to go.</p>
+                <div class="d-flex align-items-center mb-2" style="gap: 10px;">
+                    <input type="checkbox" class="checkbox" (change)="onRoundTripChange($event)"> <label style="font-size: 20px; margin-top: 10px; font-weight: bold;">Round Trip</label>
+                  </div>
+                  
                 <div class="input-container mb-4">
                     <div class="input-field-container">
                       <label for="departure">Departure</label>
@@ -35,7 +39,7 @@
                       <label for="journey">Journey Date</label>
                       <input type="date" class="input-field" [(ngModel)]="selectedDate" (change)="checkSelectedDate()">
                     </div>
-                    <div class="input-field-container">
+                    <div class="input-field-container" *ngIf="roundTrip">
                       <label for="return">Return Date</label>
                       <input type="date" class="input-field" [(ngModel)]="returnDate" (change)="checkReturnDate()">
                     </div>
@@ -66,17 +70,16 @@
                                 <div>
                                     <p class="card-text">Origin: {{ flight.origin }}</p>
                                     <p class="card-text" style=" color: #9c9c9c;">Departure Time: {{
-                                        flight.departureTime | date:'shortTime' }}</p>
+                                        flight.departureTime }}</p>
                                 </div>
                                 <div>
                                     <p class="card-text">Destination: {{ flight.destination }}</p>
-                                    <p class="card-text" style="color: #9c9c9c;">Arrival Time: {{ flight.arrivalTime |
-                                        date:'shortTime' }}</p>
+                                    <p class="card-text" style="color: #9c9c9c;">Arrival Time: {{ flight.arrivalTime }}</p>
                                 </div>
                                 <div>
                                     <p class="card-text">Price: {{ flight.price }}</p>
-                                    <p class="card-text" style="color: #9c9c9c;">Seats Available: {{
-                                        flight.seatsAvailable - flight.reservedSeats.length }}</p>
+                                    <p class="card-text" style="color: #9c9c9c;">Total Seats: {{
+                                        flight.seatsAvailable  }}</p>
                                 </div>
                                 <button class="button" (click)="openModal(flight,flight._id)">BOOK</button>
                                 <ng-template #content let-modal>
@@ -163,7 +166,7 @@
                                                 <button type="button" class="btn btn-secondary"
                                                     (click)="modal.dismiss()">Close</button>
                                                 <button type="button" class="btn btn-primary"
-                                                    (click)="onPayment(totalPrice)" routerLink="/"
+                                                    (click)="onPayment()" routerLink="/"
                                                     [disabled]="!isPaymentFormValid()">Pay Now</button>
                                             </div>
                                         </div>
@@ -195,7 +198,7 @@
                                                 <button type="button" class="btn btn-secondary"
                                                     (click)="modal.dismiss()">Close</button>
                                                 <button type="button" class="btn btn-primary"
-                                                    (click)="onPayment(totalPrice)" routerLink="/"
+                                                    (click)="onPayment()" routerLink="/"
                                                     [disabled]="!isPaymentFormValid()">Pay Now</button>
                                             </div>
                                         </div>

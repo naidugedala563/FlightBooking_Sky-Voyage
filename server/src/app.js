@@ -10,7 +10,6 @@ const { MONGO_URI } = require('./db/connect');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const models = require("./models/schema");
-
 // app.use(bodyParser.json());
 app.use(cors());
 
@@ -19,14 +18,11 @@ app.post('/register', async (req, res) => {
     try {
         const { firstname, lastname, type, email, password } = req.body;
         const user = await models.Users.findOne({ email });
-
         if (user) {
             return res.status(400).json({ message: 'User already exists' });
         }
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-
-        // Create a new user object
         const newUser = new models.Users({
             firstname,
             lastname,
@@ -43,7 +39,6 @@ app.post('/register', async (req, res) => {
         return res.status(500).json({ message: 'Server error' });
     }
 });
-
 
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
@@ -166,13 +161,8 @@ app.delete('/bookings/:id', async (req, res) => {
         return res.status(404).json({ message: 'Flight not found' });
       }
   
-      // Remove seats from flight
       flight.reservedSeats = flight.reservedSeats.filter(seat => !booking.seatNumbers.includes(seat));
-  
-      // Save the updated flight
       await flight.save();
-  
-      // Delete the booking
       await models.Booking.deleteOne({ _id: req.params.id });
   
       res.json({ message: 'Booking deleted successfully' });
@@ -181,12 +171,6 @@ app.delete('/bookings/:id', async (req, res) => {
       res.status(500).json({ message: 'Server Error' });
     }
   });
-  
-  
-
-
-
-
 
 // Get all flights
 app.get('/flights', async (req, res) => {
@@ -213,11 +197,12 @@ app.get('/flights/airline/:airline', async (req, res) => {
 
 app.post('/bookings', async (req, res) => {
     try {
+        console.log(req.body)
         const newBooking = new models.Booking(req.body);
         const id = req.body.flight;
-
         const flight = await models.Flight.findById(id);
         flight.reservedSeats.push(...newBooking.seatNumbers);
+        console.log(flight)
         const savedFlight = await flight.save();
         newBooking.flight = savedFlight._id;
         const savedBooking = await newBooking.save();
@@ -231,12 +216,11 @@ app.get('/bookings', async (req, res) => {
     try {
         const bookingDetails = await models.Booking.find().populate('flight');
         res.status(200).json(bookingDetails);
+        console.log(bookingDetails)
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
-
-
 
 app.get('/bookings/user/:userId', async (req, res) => {
     try {

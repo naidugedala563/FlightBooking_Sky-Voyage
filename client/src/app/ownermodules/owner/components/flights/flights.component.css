@@ -4,3 +4,11 @@
     height: 90vh;
     overflow: auto;
 }
+
+.form-control{
+    width: fit-content;
+}
+
+.btn{
+    width: fit-content;
+}

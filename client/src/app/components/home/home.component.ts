@@ -32,7 +32,13 @@ export class HomeComponent {
 
   isLoading = false
 
-  // Function to update the passenger name for a specific seat
+  roundTrip: boolean = false;
+
+  onRoundTripChange(event: any) {
+    this.roundTrip = event.target.checked;
+    console.log('Round trip value:', this.roundTrip);
+  }
+
   updatePassengerName(index: number, event: any) {
     const value: string = event.target.value;
     this.passengers[index] = value;
@@ -61,7 +67,6 @@ export class HomeComponent {
       this.error = "";
     }
   }
-
 
   isSame = false;
   totalPrice = 0;
@@ -92,23 +97,26 @@ export class HomeComponent {
     if (token) {
       this.selectedFlight = flight;
       this.flightId = id
-      // currentModal: NgbModalRef;
       this.modalService.open(this.modalContent, { size: 'lg' });
       this.http.get<any[]>(`http://localhost:5100/flights/${id}`).subscribe((res: any) => {
         if (res) {
-          this.bookedSeats = res.reservedSeats
+          const data = res.reservedSeats.filter((each: { date: string }) => {
+            const eachDate = new Date(each.date);
+            const selectedDate = new Date(this.selectedDate);
+            return eachDate.getDate() === selectedDate.getDate();
+          });
+          this.bookedSeats = data.map((item: { seat: any, date: any }) => item.seat);
         } else {
-          this.bookedSeats = []
+          this.bookedSeats = [];
         }
       })
     } else {
       this.route.navigate(['/login'])
     }
-
   }
 
   openPaymentModal() {
-    this.modalService.dismissAll(); // Close the current modal (confirmation modal)
+    this.modalService.dismissAll();
     this.modalService.open(this.paymentModal, { centered: true });
   }
 
@@ -120,51 +128,25 @@ export class HomeComponent {
       this.isSame = false
     }
     this.http.get<any[]>('http://localhost:5100/flights').subscribe((res) => {
-      this.flights = res.filter(flight =>   flight.origin === this.selectedFrom && flight.destination === this.selectedTo)
+      this.flights = res.filter(flight => flight.origin === this.selectedFrom && flight.destination === this.selectedTo)
       this.isLoading = false
     })
-
-    // const url = 'https://flight-fare-search.p.rapidapi.com/v2/flight/?from=LHR&to=DXB&date=2023-06-30&adult=1&type=economy&currency=USD';
-    // const options = {
-    //   headers: new HttpHeaders({
-    //     'X-RapidAPI-Key': 'eb3a5ec33dmsh017c3ab44968551p11590fjsn7a4a64b70a45',
-    //     'X-RapidAPI-Host': 'flight-fare-search.p.rapidapi.com'
-    //   })
-    // };
-
-    // const getData = () => {
-    //   this.http.get(url, options).subscribe(
-    //     (result) => {
-    //       console.log(result);
-    //     },
-    //     (error) => {
-    //       console.error(error);
-    //     }
-    //   );
-    // };
-
-    // getData();
-
-
   }
 
   selectedSeats: string[] = [];
-
   rows: any[] = [];
 
   generateSeatRows() {
-    const numRows = 10; // Number of rows
-    const seatsPerRow = 10; // Number of seats per row
-    const startingRowCharCode = 65; // ASCII code for 'A'
+    const numRows = 10;
+    const seatsPerRow = 10;
+    const startingRowCharCode = 65;
     for (let i = 0; i < numRows; i++) {
       const rowNumber = String.fromCharCode(startingRowCharCode + i);
       const rowSeats = [];
-
       for (let j = 1; j <= seatsPerRow; j++) {
         const seatLabel = `${rowNumber}${j}`;
         rowSeats.push(seatLabel);
       }
-
       this.rows.push({ rowNumber, seats: rowSeats });
     }
   }
@@ -187,14 +169,13 @@ export class HomeComponent {
       totalPrice: this.totalPrice,
       journeyDate: this.selectedDate,
       returnDate: this.returnDate,
-      seatNumbers: this.selectedSeats,
+      seatNumbers: this.selectedSeats.map(seat => ({ seat, date: this.selectedDate })),
       paymentMethod: this.selectedMethod,
-      paymentstatus: 'success'
-    }
-    console.log(this.selectedMethod)
+      paymentStatus: 'success'
+    };
+    console.log(bookingDetails)
     const response = confirm("Are you sure you want to confirm the booking?")
     if (response) {
-
       this.http.post('http://localhost:5100/bookings', bookingDetails).subscribe((res) => {
         this.currentModal = this.modalService.open(this.paymentModal, { size: 'lg' });
         console.log(res)
@@ -205,11 +186,10 @@ export class HomeComponent {
     }
   }
 
-  onPayment(totalPrice: number) {
-    let price = totalPrice * this.selectedSeats.length
+  onPayment() {
+    let price = this.totalPrice
     if (this.returnDate !== '') {
-      price = totalPrice * 2
-
+      price = this.totalPrice * 2
     }
     alert(`Payment Successful of ${price}`)
   }
