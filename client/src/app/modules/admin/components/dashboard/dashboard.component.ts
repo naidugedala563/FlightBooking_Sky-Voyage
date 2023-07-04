@@ -9,6 +9,7 @@ import { Component } from '@angular/core';
 export class DashboardComponent {
   flights: any[] = []
   bookings: any[] = []
+  users: any[] = []
   isLoading = false
   constructor(private http:HttpClient){
     this.isLoading = true
@@ -18,6 +19,10 @@ export class DashboardComponent {
 
     this.http.get<any[]>('http://localhost:5100/bookings').subscribe((res) => {
       this.bookings = res
+    })
+
+    this.http.get<any[]>('http://localhost:5100/users').subscribe((res) => {
+      this.users = res
       this.isLoading = false
     })
   }

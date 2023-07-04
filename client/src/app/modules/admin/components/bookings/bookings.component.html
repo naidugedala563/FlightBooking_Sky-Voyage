@@ -13,7 +13,7 @@
           <strong>User:</strong> {{ booking.user }}
         </div>
         <div>
-          <strong>Flight:</strong> {{ booking.flight }}
+          <strong>Flight:</strong> {{ booking.flight.flightNumber }}
         </div>
         <div>
           <strong>Passengers:</strong>
@@ -33,11 +33,8 @@
         <div>
           <strong>Seat Numbers:</strong>
           <ul>
-            <li *ngFor="let seat of booking.seatNumbers">{{ seat }}</li>
+            <li *ngFor="let seat of booking.seatNumbers">{{ seat.seat }}</li>
           </ul>
-        </div>
-        <div>
-          <strong>Baggage Options:</strong> {{ booking.baggageOptions }}
         </div>
         <div>
           <strong>Payment Method:</strong> {{ booking.paymentMethod }}

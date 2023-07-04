@@ -9,6 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { FlightsComponent } from './components/flights/flights.component';
 import { AddFlightComponent } from './components/add-flight/add-flight.component';
 import { FormsModule } from '@angular/forms';
+import { UsersComponent } from './components/users/users.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { FormsModule } from '@angular/forms';
     BookingsComponent,
     HomeComponent,
     FlightsComponent,
-    AddFlightComponent
+    AddFlightComponent,
+    UsersComponent
   ],
   imports: [
     CommonModule,

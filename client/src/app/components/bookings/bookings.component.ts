@@ -20,7 +20,7 @@ export class BookingsComponent {
         const dateB = new Date(b.journeyDate);
         return dateB.getTime() - dateA.getTime() ;
       });
-      
+      console.log(res)
       this.isLoading = false
     })
   }
