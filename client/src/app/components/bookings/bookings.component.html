@@ -45,6 +45,4 @@
       <strong class="d-flex">Payment Status: <p style="font-weight: lighter;margin-left: 10px;">{{ booking.paymentStatus }}</p></strong>
       <button class="btn btn-danger" (click)="onCancleTicket(booking._id)" [disabled]="isDateBeforeToday(booking.journeyDate)">Cancel Ticket</button>
     </div>
-    
-    
 </ul>
