@@ -1,26 +1,50 @@
-.header-container{
-    height: 10vh;
-    border-bottom: 1px solid rgb(201, 201, 201);
-}
-@media screen and (max-width:768px) {
-    .header-container{
-        border: 0;
-    }
-}
-.navbar{
-    min-height: 10vh;
-    background-color: transparent;
-    border-bottom: 1px solid rgb(201, 201, 201);
-    padding-left: 140px;
-    padding-right: 140px;
-}
-@media screen and (max-width:768px) {
-    .navbar{
-        background-color: white;
-        padding: 12px;
-    }
-}
-
-.dropdown-item{
-    cursor: pointer;
-}
+/* Common Styles for all Navbars */
+.navbar {
+    background-color: #3E5275;
+  }
+  
+  .navbar-brand {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+  }
+  
+  .nav-link {
+    color: #fff;
+  }
+  
+  .nav-link:hover {
+    color: #f8f9fa;
+  }
+  
+  /* Styles for Each Navbar */
+  .navbar-collapse {
+    justify-content: flex-end;
+  }
+  
+  /* Styles for Dropdown Menus */
+  .dropdown-menu {
+    background-color: #3E5275;
+  }
+  
+  .dropdown-item {
+    color: #fff;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #31425b;
+  }
+  
+  /* Active Nav Link Styles */
+  .nav-item.active .nav-link {
+    background-color: #31425b;
+  }
+  
+  /* Toggler Icon Styles */
+  .navbar-toggler-icon {
+    background-color: #fff;
+  }
+  
+  /* Add media queries for responsive design if needed */
+  
+  

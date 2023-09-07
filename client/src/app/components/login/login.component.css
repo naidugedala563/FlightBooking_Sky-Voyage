@@ -44,3 +44,14 @@
         display: none;
     }
 }
+/* Custom CSS */
+.container .login-container .card .btn.btn-primary {
+    background-color: #3E5275;
+    border-color: #3E5275;
+  }
+  
+  .container .login-container .card .btn.btn-primary:hover {
+    background-color: #31425b; /* Darker shade on hover */
+    border-color: #31425b;
+  }
+  

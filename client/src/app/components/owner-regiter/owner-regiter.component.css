@@ -6,6 +6,16 @@
     height: 90vh;
     overflow: auto;
 }
+.btn-primary {
+    background-color: #3E5275; /* Apply the desired color to the "Sign Up" button */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
 .registration-container{
     display: flex;
     align-items: center;
@@ -45,4 +55,15 @@
     .image{
         display: none;
     }
+}
+btn-primary {
+    background-color: #3E5275;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+
 }

@@ -1,88 +1,10 @@
-.home-container {
-  height: 90vh;
-  background-color: rgb(206, 232, 255);
-  background-image: url('https://velvetescape.com/wp-content/uploads/2010/06/ramon-kagie-hVfM3XPdBF8-unsplash-640x409.jpg');
-  background-size: cover;
-  overflow: auto;
-}
+/* home.component.css */
 
-#banner {
-  margin-top: 200px;
-}
-
-@media screen and (max-width:768px) {
-  #banner {
-    margin-top: 60px;
-  }
-}
-
-.body-container {
-  height: 90vh;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  overflow: auto;
-}
-
-.input-container {
-  width: fit-content;
-  display: flex;
-  background-color: #3470f1;
-  padding: 10px;
-  min-height: 60px;
-  gap: 10px;
-}
-
-@media screen and (max-width:975px) {
-  .input-container {
-    flex-direction: column;
-    width: 100%;
-  }
-}
-
-.input-field {
-  height: 100%;
-  width: 240px;
-  padding: 10px;
-  border-radius: 4px;
-}
-
-@media screen and (max-width:975px) {
-  .input-field {
-    width: 100%;
-  }
-}
-
-.section-about {
-  min-height: 50vh;
-}
-
-.contact-section {
-  min-height: 50vh;
-  background-color: rgb(243, 246, 248);
-}
-
-.main-container {
-  height: 90vh;
-  overflow: auto;
-}
-
-.button {
-  background-color: rgb(255, 111, 0);
-  width: 120px;
-  height: 44px;
-  border: 0;
-  outline: none;
-  border-radius: 2px;
-}
-
-/* .card{
-    box-shadow: 0 10px 25px #3a3a3a;
-} */
-
-footer {
-  background-color: #cecece;
-  padding: 20px;
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 .container {
@@ -90,86 +12,235 @@ footer {
   margin: 0 auto;
 }
 
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+/* Main Container */
+.main-container {
+  padding: 20px;
 }
 
-.footer-column {
-  flex: 0 0 33.33%;
-  margin-bottom: 20px;
+/* Banner Styles */
+#banner {
+  background-color: #3E5275;
+  padding: 20px;
+  text-align: center;
 }
 
-.footer-column h4 {
+#banner h1 {
+  font-size: 40px;
+  color: #fff;
   margin-bottom: 10px;
 }
 
-.footer-column ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+#banner p {
+  font-size: 20px;
+  color: #fff;
 }
 
-.footer-column ul li {
-  margin-bottom: 8px;
-}
-
-.footer-column ul li a {
-  color: #333;
-  text-decoration: none;
-}
-
-.footer-bottom {
-  text-align: center;
-  margin-top: 20px;
-  color: #888;
-}
-
-
-.seat {
-  width: 60px;
-  height: 30px;
-  border: 1px solid grey;
-}
-
-.seat:hover {
-  background-color: #ffb22e;
-  transition: 0.3s ease-in;
-  cursor: pointer;
-}
-
-.green-bg {
-  background-color: green;
-}
-
-.form-container {
+/* Form Styles */
+.input-container {
   display: flex;
-  overflow: auto;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .input-field-container {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
+  flex: 1 1 200px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.checkbox {
+  margin-top: 10px;
 }
 
 .button-container {
-  margin-top: 24px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: end;
-  /* justify-content: end; */
+  margin-top: 35px;
+  border: #ccc;
 }
 
-.list-inline-item{
-  font-size: 30px;
-  margin: 10px;
+.button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.checkbox{
-  height: 20px;
-  width: 20px;
-  border-radius: 4px;
+.button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Error Message Styles */
+.error-message {
+  font-size: 28px;
+  font-weight: bold;
+  color: #f00;
+}
+
+/* Available Flights Styles */
+.row {
+  margin-top: 20px;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+.card {
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 24px;
+}
+
+.card-text {
+  font-size: 18px;
+  color: #555;
+}
+
+.button {
+  padding: 8px 15px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Modal Styles */
+.modal-header {
+  background-color: #007bff;
+  color: #fff;
+  padding: 15px;
+}
+
+.modal-title {
+  font-size: 24px;
+}
+
+.modal-body {
+  padding: 15px;
+}
+
+.modal-footer {
+  padding: 15px;
+  text-align: right;
+}
+
+/* Payment Modal Styles */
+#payment {
+  margin-top: 10px;
+}
+
+/* About Section Styles */
+.section-about {
+  background-color: #fff;
+  padding: 40px;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 36px;
+}
+
+.section-description {
+  font-size: 18px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Contact Section Styles */
+.contact-section {
+  padding: 40px;
+  background-color: #fff;
+}
+
+.section-heading {
+  font-size: 36px;
+}
+
+.section-subheading {
+  font-size: 18px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button.btn-primary {
+  background-color: #3E5275ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Footer Styles */
+.footer {
+  background-color: #f9f9f9;
+  padding: 20px;
+  text-align: center;
+}
+
+.footer-links li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.footer-links li:last-child {
+  margin-right: 0;
+}
+
+.footer-social li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.footer-social li:last-child {
+  margin-right: 0;
+}
+
+.footer-credits {
+  margin-top: 20px;
+}
+
+/* Media Queries */
+@media (max-width: 767px) {
+  .input-field-container {
+    flex-basis: 100%;
+  }
+}
+
+@media (max-width: 575px) {
+  #banner h1 {
+    font-size: 30px;
+  }
+
+  #banner p {
+    font-size: 18px;
+  }
 }

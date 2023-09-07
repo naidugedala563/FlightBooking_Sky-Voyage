@@ -4,6 +4,7 @@
             <div class="container text-light" id="banner">
                 <h1>Your dream holiday's starts here!</h1>
                 <p>Select you'r destination where you want to go.</p>
+                <img src="assets\i1.png" class="img-fluid" alt="..." >
                 <div class="d-flex align-items-center mb-2" style="gap: 10px;">
                     <input type="checkbox" class="checkbox" (change)="onRoundTripChange($event)"> <label style="font-size: 20px; margin-top: 10px; font-weight: bold;">Round Trip</label>
                   </div>
@@ -14,7 +15,7 @@
                       <select name="from" id="from" class="input-field" [(ngModel)]="selectedFrom">
                         <option value="" selected disabled>Departure City</option>
                         <option value="Chennai">Chennai</option>
-                        <option value="Bengalore">Bengalore</option>
+                        <option value="Bangalore">Bengalore</option>
                         <option value="Hyderabad">Hyderabad</option>
                         <option value="Mumbai">Mumbai</option>
                         <option value="Madhya Pradesh">Madhya Pradesh</option>
@@ -27,7 +28,7 @@
                       <select name="to" id="to" class="input-field" [(ngModel)]="selectedTo">
                         <option value="" selected disabled>Destination City</option>
                         <option value="Chennai">Chennai</option>
-                        <option value="Bengalore">Bengalore</option>
+                        <option value="Bangalore">Bengalore</option>
                         <option value="Hyderabad">Hyderabad</option>
                         <option value="Mumbai">Mumbai</option>
                         <option value="Madhya Pradesh">Madhya Pradesh</option>
@@ -204,8 +205,6 @@
                                         </div>
                                     </div>
                                 </ng-template>
-
-
                             </div>
                         </div>
                     </div>
@@ -216,27 +215,26 @@
     <section id="about" class="section-about  p-4">
         <div class="container">
             <h2 class="section-title">About Us</h2>
+            <h2 class="section-description">Welcome to Sky-Voyage - Your Ultimate Flight Booking App!</h2>
             <p class="section-description">
-                Welcome to our flight booking app! We are dedicated to providing you with a seamless travel experience.
-                Whether you're planning a business trip or a vacation, our app offers a wide range of flights to choose
-                from, competitive prices, and convenient booking options.
+                At Sky-Voyage, we believe in making your travel dreams come true with a seamless and unforgettable experience.
+                Whether you're a business traveler or an adventurer seeking new horizons, our state-of-the-art flight booking 
+                app is here to cater to all your needs.
             </p>
             <p class="section-description">
-                Our team of travel experts is committed to ensuring that your journey is comfortable and stress-free. We
-                provide real-time flight status updates, secure payment integration, and reliable customer support to
-                assist you throughout your travel journey.
+                With an extensive array of flights at your fingertips, explore a world of possibilities and choose from a wide
+                selection of airlines and destinations. From bustling metropolises to serene getaways, we've got you covered.
             </p>
             <p class="section-description">
-                Start exploring our app today and book your next flight with ease. We look forward to serving you and
-                making your travel dreams a reality!
+                Book your flight today and experience the world like never before. Welcome aboard Sky-Voyage - Where dreams take flight!
             </p>
         </div>
     </section>
 
     <section id="contact" class="contact-section text-dark p-4">
         <div class="container">
-            <h2 class="section-heading">Contact Us</h2>
-            <p class="section-subheading">Have any questions? Feel free to reach out to us.</p>
+            <h2 class="section-heading" align="center">Contact Us</h2>
+            <p class="section-subheading" align="center">Have any questions? Feel free to reach out to us.</p>
             <div class="row">
                 <div class="col-lg-6">
                     <form id="contactForm" name="sentMessage" novalidate>
@@ -265,9 +263,9 @@
                 <div class="col-lg-6">
                     <div class="contact-info">
                         <h3>Contact Information</h3>
-                        <p><i class="fa fa-map-marker"></i> 123 Street, City, Country</p>
+                        <p><i class="fa fa-map-marker"></i> 50001 Travels Street,Vishakapatnam, Andhra Pradesh</p>
                         <p><i class="fa fa-phone"></i> +1 234 5678</p>
-                        <p><i class="fa fa-envelope"></i> info@example.com</p>
+                        <p><i class="fa fa-envelope"></i> info@sky-voyage.in</p>
                     </div>
                 </div>
             </div>
@@ -280,20 +278,20 @@
                 <div class="col-md-6">
                     <div class="footer-links">
                         <ul class="list-unstyled">
-                            <li><a href="#about">About Us</a></li>
-                            <li><a href="#contact">Contact Us</a></li>
-                            <li><a href="#">FAQs</a></li>
-                            <li><a href="#">Terms and Conditions</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#about" style="color: #3E5275;">About Us</a></li>
+                            <li><a href="#contact" style="color: #3E5275;">Contact Us</a></li>
+                            <li><a href="#" style="color: #3E5275;">FAQs</a></li>
+                            <li><a href="#" style="color: #3E5275;">Terms and Conditions</a></li>
+                            <li><a href="#" style="color: #3E5275;">Privacy Policy</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="footer-social" style="gap: 20px;">
                         <ul class="list-inline text-right">
-                            <li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                            <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
-                            <li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                            <li class="list-inline-item"><a href="#" style="color: #3E5275;"><i class="fab fa-facebook-f"></i></a></li>
+                            <li class="list-inline-item"><a href="#" style="color: #3E5275;"><i class="fab fa-twitter"></i></a></li>
+                            <li class="list-inline-item"><a href="#" style="color: #3E5275;"><i class="fab fa-instagram"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -301,7 +299,7 @@
             <div class="row">
                 <div class="col">
                     <div class="footer-credits text-center">
-                        <p>&copy; 2023 FlightBookingApp. All rights reserved.</p>
+                        <p style="color: #3E5275;">&copy; 2023 FlightBookingApp. All rights reserved.</p>
                     </div>
                 </div>
             </div>

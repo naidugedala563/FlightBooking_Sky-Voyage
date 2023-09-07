@@ -31,3 +31,14 @@
         width: 100%;
     }
 }
+/* Custom CSS for Buttons */
+.btn-primary {
+    background-color: #3E5275;
+    border-color: #3E5275;
+  }
+  
+  .btn-primary:hover {
+    background-color: #31425b; /* Darker shade on hover */
+    border-color: #31425b;
+  }
+  
